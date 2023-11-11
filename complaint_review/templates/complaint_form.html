@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class = "complaint">
+            <h1>Complaint Form</h1>
+            <form method="POST" >  
+                {% csrf_token %}  
+                <table>
+                    <tr>
+                        <td><b>Email:</b></td>
+                        <td>{{email}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Nama:</b></td>
+                        <td>{{nama}}</td>
+                    </tr>
+                    {{ form.as_table }}  
+                    <tr>  
+                        <td></td>
+                        <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"/></td>  
+                    </tr>  
+                </table>  
+            </form>
+        </div>
+    </div>
+{% endblock content %}
