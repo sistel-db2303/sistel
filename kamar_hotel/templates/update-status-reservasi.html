@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPDATE STATUS RESERVASI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .dashboard-section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>UPDATE STATUS RESERVASI</h1>
+
+    <div class="dashboard-section">
+        <form action="">
+            <table>
+                <tr>
+                    <th>ID Reservasi</th>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <th>Nomor Kamar</th>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td><select>
+                        <option>
+                        Dalam Proses Konfirmasi
+                        </option>
+                        <option>
+                        Disetujui
+                        </option>
+                        <option>
+                        Ditolak
+                        </option>
+                        <option>
+                        Selesai
+                        </option>
+                        <option>
+                        Menunggu Pembayaran
+                        </option>
+                    </select></td>
+                </tr>              
+            </table>
+            <input type="submit" value="update">
+        </form>
+        
+    </div>
+
+    
+</body>
+</html>
