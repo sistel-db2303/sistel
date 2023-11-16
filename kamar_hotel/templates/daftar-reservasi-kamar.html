@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAFTAR RESERVASI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .dashboard-section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>DAFTAR RESERVASI KAMAR</h1>
+
+    <div class="dashboard-section">
+        <table>
+            <tr>
+                <th>ID Reservasi</th>
+                <th>Nomor Kamar</th>
+                <th>Date</th>
+                <th>Status Reservasi</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>RSVP-01</td>
+                <td>Kamar 101</td>
+                <td>15-11-2023</td>
+                <td>Disetujui</td>
+                <td>
+                    <button type="button"><a href="{% url 'update-reservasi' %}">Update Reservasi</a></button>
+                    <button type="button"><a href="{% url 'get-detail-reservasi' %}">Get Detail</a></button>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+
+    
+</body>
+</html>

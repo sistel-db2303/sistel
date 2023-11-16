@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'complaint_review'
+    'complaint_review',
+    'kamar_hotel'
 ]
 
 MIDDLEWARE = [
