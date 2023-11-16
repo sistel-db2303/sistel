@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from sistel.views import login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('feedback/', include('complaint_review.urls')),
+<<<<<<< HEAD
     path('kamar-hotel/', include('kamar_hotel.urls'))
+=======
+    path('login/', login, name='login')
+>>>>>>> cfc82aaf77b3f6257cfd762a3b9cc7a80cb2b383
 ]
