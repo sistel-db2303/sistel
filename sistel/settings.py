@@ -77,8 +77,13 @@ WSGI_APPLICATION = 'sistel.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'bGfD-1fc22D*4fDEC4-d331f-25c6bbe',
+        'HOST': 'monorail.proxy.rlwy.net',
+        'PORT': '59422',
     }
 }
 
