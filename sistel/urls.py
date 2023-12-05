@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('feedback/', include('complaint_review.urls')),
     path('kamar-hotel/', include('kamar_hotel.urls')),
-    path('login/', login, name='login')
+    path('login/', login, name='login'),
+    path('dashboard/', include('r_dashboard.urls')),
 ]

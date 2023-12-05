@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'complaint_review',
-    'kamar_hotel'
+    'kamar_hotel',
+    'r_dashboard',
 ]
 
 MIDDLEWARE = [
