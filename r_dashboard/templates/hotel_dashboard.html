@@ -1,8 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base_customer.html' %}
+
+
+
+
+{% block meta %}
+
+
+
+
     <title>HOTEL</title>
     <style>
         body {
@@ -36,7 +41,11 @@
             background-color: #f2f2f2;
         }
     </style>
-</head>
+
+
+{% endblock meta %}
+{% block content %}
+
 <body>
     <h1>HOTEL</h1>
 
@@ -45,27 +54,27 @@
         <table>
             <tr>
                 <th>Nama Pemilik Hotel</th>
-                <td>Thalia Nathania </td>
+                <td>{{fname}} {{lname}} </td>
             </tr>
             <tr>
                 <th>Nomor HP</th>
-                <td>085893033669</td>
+                <td>{{phonenum}}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>example@hotel.com</td>
+                <td>{{email}}</td>
             </tr>
             <tr>
                 <th>Nomor Izin Usaha</th>
-                <td>00123456789</td>
+                <td>{{nib}}</td>
             </tr>
             <tr>
                 <th>Nama Hotel</th>
-                <td>Hotel Aksara</td>
+                <td>{{hotel_name}}</td>
             </tr>
             <tr>
                 <th>Alamat Hotel</th>
-                <td>Jalan Cengkeh No. 9</td>
+                <td>{{street}}, {{city}}, {{province}}</td>
             </tr>
         </table>
     </div>
@@ -73,6 +82,7 @@
     <div class="dashboard-section">
         <h2>Daftar Kamar</h2>
         <table>
+            
             <tr>
                 <th>Nomor Kamar</th>
                 <th>Harga</th>
@@ -80,13 +90,14 @@
                 <th>Daftar Fasilitas</th>
                 
            </tr>
-        
+           {% for room in room_data %}
             <tr>
-                <td>127</td>
-                <td>1200000</td>
-                <td>1</td>
-                <td>Balcony</td>
+                <td>{{room.0}}</td>
+                <td>{{room.1}}</td>
+                <td>{{room.2}}</td>
+                <td>{{room.3}}</td>
             </tr>
+            {% endfor %}
           
         </table>
     </div>
@@ -98,13 +109,14 @@
                 <th>ID Fasilitas</th>
                 <th>Nama Fasilitas</th>
             </tr>
-     
+            {% for facility in data_hotel_facilities %}
             <tr>
-                <td>01</td>
-                <td>Kolam Renang</td>
+                <td>{{forloop.counter}}</td>
+                <td>{{facility.0}}</td>
             </tr>
-           
+            {% endfor %}
         </table>
     </div>
 </body>
 </html>
+{% endblock content %}

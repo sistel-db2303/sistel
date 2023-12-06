@@ -16,24 +16,26 @@ cur = conn.cursor()  # creating a cursor
  
 # executing queries to create table
 cur.execute(r"""
+
+            set search_path to sistel;
+select * from complaints
             
-set search_path to sistel;
-
-
-
-########## INSERT SQL HERE#################     
-INSERT INTO SHUTTLE_SERVICE VALUES 
-(81234567890,'B 1234 AB'),
-	(82123456789,'D 5678 CD'),
-	(83876543210,'J 2345 JK'),
-	(85643210987,'F 9012 EF'),
-	(81367890123,'G 3456 FG');
-
 """)
 
+data_kamar =  cur.fetchall()
+print(data_kamar)
 
 # commit the changes
 conn.commit()
 print("Task finished successfully")
 
 
+
+
+'''
+select status 
+from reservation_status, reservation_status_history, reservation, complaints
+where 
+    reservation.rID = reservation_status_history.rID
+    and reservation_status_history.rsID = reservation_status.id;
+    '''
