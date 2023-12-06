@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+</head>
+<body>
+    <h2>Registration</h2>
+    <form id="registrationForm">
+        <label for="roleSelection">Select Role:</label>
+        <select id="roleSelection" name="role">
+            <option value="customer">Customer</option>
+            <option value="hotel">Hotel</option>
+        </select>
+        <br><br>
+        
+        <div id="customerRegistration" style="display:none;">
+            <h3>REGISTER - CUSTOMER</h3>
+            <label for="customerEmail">Email:</label>
+            <input type="email" id="customerEmail" name="email" required><br><br>
+            
+            <label for="customerPassword">Password:</label>
+            <input type="password" id="customerPassword" name="password" required><br><br>
+            
+            <label for="customerFirstName">Nama Depan:</label>
+            <input type="text" id="customerFirstName" name="firstName" required><br><br>
+            
+            <label for="customerLastName">Nama Belakang:</label>
+            <input type="text" id="customerLastName" name="lastName" required><br><br>
+            
+            <label for="customerPhoneNumber">Nomor HP:</label>
+            <input type="tel" id="customerPhoneNumber" name="phoneNumber" required><br><br>
+            
+            <label for="customerNIK">NIK:</label>
+            <input type="text" id="customerNIK" name="nik" required><br><br>
+            
+            <input type="submit" value="REGISTER">
+        </div>
+        
+        <div id="hotelRegistration" style="display:none;">
+            <h3>REGISTER - HOTEL</h3>
+            <label for="hotelEmail">Email:</label>
+            <input type="email" id="hotelEmail" name="email" required><br><br>
+            
+            <label for="hotelPassword">Password:</label>
+            <input type="password" id="hotelPassword" name="password" required><br><br>
+            
+            <label for="ownerFirstName">Nama Depan Pemilik Hotel:</label>
+            <input type="text" id="ownerFirstName" name="ownerFirstName" required><br><br>
+            
+            <label for="ownerLastName">Nama Belakang Pemilik Hotel:</label>
+            <input type="text" id="ownerLastName" name="ownerLastName" required><br><br>
+            
+            <label for="ownerPhoneNumber">Nomor HP Pemilik Hotel:</label>
+            <input type="tel" id="ownerPhoneNumber" name="ownerPhoneNumber" required><br><br>
+            
+            <label for="businessLicense">Nomor Izin Usaha:</label>
+            <input type="text" id="businessLicense" name="businessLicense" required><br><br>
+            
+            <label for="hotelName">Nama Hotel:</label>
+            <input type="text" id="hotelName" name="hotelName" required><br><br>
+            
+            <label for="hotelBranch">Cabang Hotel:</label>
+            <input type="text" id="hotelBranch" name="hotelBranch" required><br><br>
+            
+            <label>Alamat Hotel:</label><br>
+            <label for="streetName">Nama Jalan:</label>
+            <input type="text" id="streetName" name="streetName" required><br>
+            
+            <label for="district">Kecamatan:</label>
+            <input type="text" id="district" name="district" required><br>
+            
+            <label for="city">Kota:</label>
+            <input type="text" id="city" name="city" required><br>
+            
+            <label for="province">Provinsi:</label>
+            <input type="text" id="province" name="province" required><br><br>
+            
+            <input type="submit" value="REGISTER">
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('roleSelection').addEventListener('change', function() {
+            var role = this.value;
+            var customerRegistration = document.getElementById('customerRegistration');
+            var hotelRegistration = document.getElementById('hotelRegistration');
+            
+            if (role === 'customer') {
+                customerRegistration.style.display = 'block';
+                hotelRegistration.style.display = 'none';
+            } else if (role === 'hotel') {
+                customerRegistration.style.display = 'none';
+                hotelRegistration.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'complaint_review',
     'kamar_hotel',
     'r_dashboard',
+    'authentication',
+
 ]
 
 MIDDLEWARE = [
