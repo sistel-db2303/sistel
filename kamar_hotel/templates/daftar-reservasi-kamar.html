@@ -49,16 +49,20 @@
                 <th>Status Reservasi</th>
                 <th>Action</th>
             </tr>
+            {%for id, nomor, tanggal, status in result%}
             <tr>
-                <td>RSVP-01</td>
-                <td>Kamar 101</td>
-                <td>15-11-2023</td>
-                <td>Disetujui</td>
+                <td>{{id}}</td>
+                <td>{{nomor}}</td>
+                <td>{{tanggal|date:"d-m-Y"}}</td>
+                <td>{{status}}</td>
                 <td>
-                    <button type="button"><a href="{% url 'update-reservasi' %}">Update Reservasi</a></button>
-                    <button type="button"><a href="{% url 'get-detail-reservasi' %}">Get Detail</a></button>
+                    {%if is_hotel%}
+                    <button type="button"><a href="{% url 'update-reservasi' id%}">Update Reservasi</a></button>
+                    {%endif%}
+                    <button type="button"><a href="{% url 'get-detail-reservasi' id %}">Get Detail</a></button>
                 </td>
             </tr>
+            {%endfor%}
             
         </table>
     </div>
