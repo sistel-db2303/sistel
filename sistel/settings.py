@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'kamar_hotel',
     'r_dashboard',
     'authentication',
+    'CRU_Kamar_Hotel',
 
 ]
 
