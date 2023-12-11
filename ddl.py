@@ -15,12 +15,22 @@ print("Database connected successfully")
 cur = conn.cursor()  # creating a cursor
  
 # executing queries to create table
-cur.execute(r"""
+# cur.execute(rf"""
+                
+#         set search_path to sistel;
 
-            set search_path to sistel;
-select * from complaints
-            
-""")
+#         select room.number,room.price,room.floor,string_agg(room_facilities.id,', ')
+#         from room,room_facilities   
+#         where room.number = room_facilities.rNum
+#         GROUP BY room.number,room.price,room.floor
+#                 """)
+
+cur.execute(rf"""
+        set search_path to sistel;
+                
+        select * from hotel
+        
+                """)
 
 data_kamar =  cur.fetchall()
 print(data_kamar)
