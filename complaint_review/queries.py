@@ -15,7 +15,7 @@ def initalize_connection():
 
 
 
-def submit_complaint(hotel_name, hotel_branch, complaint):
+def submit_complaint(email_user, hotel_name, hotel_branch, complaint):
     conn = initalize_connection()
     cur = conn.cursor()
 
@@ -59,7 +59,7 @@ def submit_complaint(hotel_name, hotel_branch, complaint):
 
         select reservation.rid 
         from reservation, reservation_room, room
-        where reservation.cust_email = 'rtregunnah4@mapquest.com'
+        where reservation.cust_email = '{email_user}'
             and reservation.rid = reservation_room.rsv_id
             and reservation_room.rNum = room.number
             and room.hotel_name = '{hotel_name}'
@@ -83,7 +83,7 @@ def submit_complaint(hotel_name, hotel_branch, complaint):
         set search_path to sistel;
                 
         insert into complaints values
-                ('CC{complaint_count+1}','rtregunnah4@mapquest.com', '{rev_id}', '{complaint}');
+                ('CC{complaint_count+1}','{email_user}', '{rev_id}', '{complaint}');
                 """
                 )
     
