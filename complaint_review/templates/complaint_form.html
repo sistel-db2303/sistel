@@ -15,7 +15,7 @@
                     </tr>
                     <tr>
                         <td><b>Nama:</b></td>
-                        <td>{{nama}}</td>
+                        <td>{{fname}} {{lname}}</td>
                     </tr>
                     {{ form.as_table }}  
                     <tr>  
@@ -24,6 +24,7 @@
                     </tr>  
                 </table>  
             </form>
+            {{error_message}}
         </div>
     </div>
 {% endblock content %}
