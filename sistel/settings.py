@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'r_dashboard',
     'authentication',
     'CRU_Kamar_Hotel',
+    'daftar_detail_hotel',
+    'fasilitas_hotel',
 
 ]
 
