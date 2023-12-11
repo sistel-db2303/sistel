@@ -73,18 +73,39 @@
     <div class="dashboard-section">
         <h2>SHUTTLE</h2>
         <table>
+            {%if not nomor_kendaraan%}
             <tr>
                 <td>Tidak ada reservasi untuk shuttle pada reservasi ini.</td>
             </tr>
             <tr>
                 <td><button type="button">
-                Reservasi Shuttle
+                <a href="{% url 'reservasi-shuttle' id %}">Reservasi Shuttle</a>
                 </button></td>
-            </tr>     
+            </tr>  
+            {%else%}
+            <tr>
+                <th>ID Reservasi:</th>
+                <td>{{id}}</td>
+            </tr>
+            <tr>
+                <th>Nomor Kendaraan:</th>
+                <td>{{nomor_kendaraan}}</td>
+            </tr>
+            <tr>
+                <th>Nomor HP Driver:</th>
+                <td>{{nomor_driver}}</td>
+            </tr>
+            <tr>
+                <th>Tanggal:</th>
+                <td>{{tanggal_shuttle|date:"d-m-Y"}}</td>
+            </tr>
+            {%endif%}   
         </table>       
     </div>
 
-    <button type="button"> Back </button>
+    <button type="button"> 
+        <a href="{%url 'get-daftar-reservasi'%}">Back</a>
+    </button>
 
     
 </body>

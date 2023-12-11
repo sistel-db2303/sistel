@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 import psycopg2
+from datetime import datetime, timedelta, timezone
  
 DB_NAME = 'railway'
 DB_USER = 'postgres'
@@ -17,14 +18,9 @@ def get_daftar_reservasi(request):
                         port=DB_PORT)
     cur = conn.cursor()
     email = request.COOKIES.get('email')
+    role = request.COOKIES.get('role')
 
-    cur.execute(f"""
-
-    set search_path to sistel;
-    select 1 from customer where email = '{email}';
-                """)
-    exist = cur.fetchone()
-    if exist :
+    if role == 'customer' :
         cur.execute(f"""
 
         set search_path to sistel;
@@ -39,45 +35,30 @@ def get_daftar_reservasi(request):
         data_reservasi =  cur.fetchall()
         is_hotel = False
 
-    # commit the changes
-        conn.commit()
-        context = {
-            "result": data_reservasi,
-            "is_hotel": is_hotel
-        }
-        return render(request, 'daftar-reservasi-kamar.html', context)
     
     else :
         cur.execute(f"""
 
         set search_path to sistel;
-        select 1 from hotel where email = '{email}';
-                    """)
-        exist = cur.fetchone()
-        
-        if exist :
-            cur.execute(f"""
+        select r.rid, rnum, rsh.datetime, status
+        from reservation r join reservation_room on r.rid = rsv_id
+        join reservation_status_history rsh on r.rid = rsh.rid
+        join reservation_status on rsid = id
+        join room ro on rnum = number
+        join hotel h on (ro.hotel_name, ro.hotel_branch)=(h.hotel_name, h.hotel_branch)
+        where email = '{email}';
+                    
+        """)
 
-            set search_path to sistel;
-            select r.rid, rnum, rsh.datetime, status
-            from reservation r join reservation_room on r.rid = rsv_id
-            join reservation_status_history rsh on r.rid = rsh.rid
-            join reservation_status on rsid = id
-            join room ro on rnum = number
-            join hotel h on (ro.hotel_name, ro.hotel_branch)=(h.hotel_name, h.hotel_branch)
-            where email = '{email}';
-                        
-            """)
+        data_reservasi =  cur.fetchall()
+        is_hotel = True
 
-            data_reservasi =  cur.fetchall()
-            is_hotel = True
-
-            conn.commit()
-            context = {
-                "result": data_reservasi,
-                "is_hotel": is_hotel
-            }
-            return render(request, 'daftar-reservasi-kamar.html', context)
+    conn.commit()
+    context = {
+        "result": data_reservasi,
+        "is_hotel": is_hotel
+    }
+    return render(request, 'daftar-reservasi-kamar.html', context)
 
 
 def update_reservasi(request, reservation_id):
@@ -88,6 +69,11 @@ def update_reservasi(request, reservation_id):
                         port=DB_PORT)
     cur = conn.cursor()
     email = request.COOKIES.get('email')
+    role = request.COOKIES.get('role')
+
+    if role != 'hotel':
+        return redirect('get-daftar-reservasi')
+    
     if request.method == "POST":
         status_id = request.POST.get("status")
         cur.execute(f"""
@@ -136,7 +122,6 @@ def get_detail_reservasi(request, reservation_id):
                         host=DB_HOST,
                         port=DB_PORT)
     cur = conn.cursor()
-    email = request.COOKIES.get('email')
         
     cur.execute(f"""
 
@@ -146,13 +131,25 @@ def get_detail_reservasi(request, reservation_id):
     join reservation_status_history rsh on r.rid = rsh.rid
     join reservation_status on rsid = id
     join room on rnum = number
-    where cust_email = '{email}' and r.rid = '{reservation_id}';
+    where r.rid = '{reservation_id}';
                 
     """)
 
     data_reservasi =  cur.fetchone()
-    print(data_reservasi)
-#('RSVP-01', 'Kamar 101', 'Hotel Aston', 'Jakarta', datetime.datetime(2022, 10, 19, 10, 0), 'Dalam Proses Konfirmasi')
+
+    cur.execute(f"""
+
+    set search_path to sistel;
+    select vehicle_num, driver_phonenum, datetime
+    from reservation_shuttleservice
+    where rsv_id='{reservation_id}'
+    ;
+    """)
+
+    data_shuttle = cur.fetchall()
+    print(data_shuttle)
+    print(reservation_id)
+
     # commit the changes
     conn.commit()
     context = {
@@ -163,43 +160,52 @@ def get_detail_reservasi(request, reservation_id):
         "tanggal" : data_reservasi[4],
         "status" : data_reservasi[5]
     }
+
+    if data_shuttle:
+        context['nomor_kendaraan']=data_shuttle[0]
+        context['nomor_driver']=data_shuttle[1]
+        context['tanggal_shuttle']=data_shuttle[2]
+
     return render(request, 'detail-reservasi.html', context)
 
 
-def reservasi_shuttle(request):
-    return render(request, 'reservasi-shuttle.html')
+def reservasi_shuttle(request, reservation_id):
+    conn = psycopg2.connect(database=DB_NAME,
+                        user=DB_USER,
+                        password=DB_PASS,
+                        host=DB_HOST,
+                        port=DB_PORT)
+    cur = conn.cursor()
+    email = request.COOKIES.get('email')
+    role = request.COOKIES.get('role')
 
-# conn = psycopg2.connect(database=DB_NAME,
-#                         user=DB_USER,
-#                         password=DB_PASS,
-#                         host=DB_HOST,
-#                         port=DB_PORT)
-# print("Database connected successfully")
- 
-# cur = conn.cursor()  # creating a cursor
- 
-# # executing queries to create table
-# cur.execute(r"""
+    if role != 'customer':
+        return redirect('get-daftar-reservasi')
+    
+    if request.method == "POST":
+        key = request.POST.get("shuttle_service")
+        cur.execute(f"""
+        set search_path to sistel
+        insert into reservation_shuttleservice
+        values ({reservation_id}, {key[0]}, {key[1]}, {datetime.now(timezone(timedelta(hours=7)))}, true);
+        """)
+        conn.commit()
 
-#             set search_path to sistel;
-# select * from complaints
-            
-# """)
+        return redirect('get-detail-reservasi', reservation_id = reservation_id)
 
-# data_kamar =  cur.fetchall()
-# print(data_kamar)
+    cur.execute(f"""
 
-# # commit the changes
-# conn.commit()
-# print("Task finished successfully")
+    set search_path to sistel;
+    select driver_name, vehicle_brand, vehicle_type, phonenum, platnum
+    from shuttle_service join driver on driver_phonenum=phonenum
+    join vehicle on vehicle_platnum=platnum;
 
+    """)
 
+    daftar_shuttle_service = cur.fetchall()
+    context = {"daftar_shuttle_service": daftar_shuttle_service,
+               "reservation_id": reservation_id
 
+    }
 
-# '''
-# select status 
-# from reservation_status, reservation_status_history, reservation, complaints
-# where 
-#     reservation.rID = reservation_status_history.rID
-#     and reservation_status_history.rsID = reservation_status.id;
-#     '''
+    return render(request, 'reservasi-shuttle.html', context)
