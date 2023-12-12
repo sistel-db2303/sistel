@@ -6,7 +6,8 @@
 </head>
 <body>
     <h2>Registration</h2>
-    <form id="registrationForm">
+    <form id="customerRegistrationForm" method="POST">
+    {% csrf_token %}
         <label for="roleSelection">Select Role:</label>
         <select id="roleSelection" name="role">
             <option value="customer">Customer</option>
@@ -14,7 +15,7 @@
         </select>
         <br><br>
         
-        <div id="customerRegistration" style="display:none;">
+        <div id="customerRegistration">
             <h3>REGISTER - CUSTOMER</h3>
             <label for="customerEmail">Email:</label>
             <input type="email" id="customerEmail" name="email" required><br><br>
@@ -36,7 +37,9 @@
             
             <input type="submit" value="REGISTER">
         </div>
-        
+    </form>
+    <form id="hotelRegistrationForm" method="POST">
+    {% csrf_token %}
         <div id="hotelRegistration" style="display:none;">
             <h3>REGISTER - HOTEL</h3>
             <label for="hotelEmail">Email:</label>
@@ -79,6 +82,8 @@
             <input type="submit" value="REGISTER">
         </div>
     </form>
+
+    {{error_message}}
 
     <script>
         document.getElementById('roleSelection').addEventListener('change', function() {

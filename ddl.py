@@ -27,26 +27,31 @@ cur = conn.cursor()  # creating a cursor
 
 cur.execute(rf"""
             
-        set search_path to sistel;
-        
-        
-        DROP TRIGGER IF EXISTS check_positive_values ON ROOM;
+    set search_path to sistel;
+            
+    create or replace function cek_user()
+    returns trigger as 
+    $$
+        declare
+            rev_status varchar(50);
+        begin
+            if (tg_op = 'INSERT') then
+                if (new.password ~* '[a-z]') is false or (new.password ~* '[0-9]') is false then
+                raise exception 'Password harus mengandung angka dan huruf';
+                end if;
+                return new;
+            end if;
+        end;
+    $$
+    Language plpgsql;
 
-
-            set search_path to sistel;
-select * from sistel.user where email = 'ekonke1@altervista.org';
 
             
                 """)
 
-# cur.execute(rf"""
-#                 set search_path to sistel;
-#                 select * from room;
 
-#             """)
-
-data_kamar =  cur.fetchall()
-print(data_kamar)
+# data_kamar =  cur.fetchall()
+# print(data_kamar)
 
 # commit the changes
 # print(cur.fetchall())
