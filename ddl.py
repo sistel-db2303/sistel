@@ -32,6 +32,10 @@ cur.execute(rf"""
         
         DROP TRIGGER IF EXISTS check_positive_values ON ROOM;
 
+
+            set search_path to sistel;
+select * from sistel.user where email = 'ekonke1@altervista.org';
+
             
                 """)
 
