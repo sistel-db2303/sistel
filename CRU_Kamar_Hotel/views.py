@@ -6,6 +6,9 @@ from .queries import add_room, get_hotel_info, show_room, delete_room
 # View for the "Form Tambah Kamar" page
 def tambah_kamar(request):
     user = ''
+    nomor_kamar = ''
+    harga = ''
+    lantai = ''
     if request.method == 'POST':
         nomor_kamar = request.POST.get('nomorKamar')
         harga = request.POST.get('harga')
@@ -15,6 +18,7 @@ def tambah_kamar(request):
             print('user : ',user)
         except:
             return HttpResponseRedirect(reverse("authentication:login_user"))
+    else : return render(request, 'formTambahKamar.html')
     
     hotel_name,hotel_branch = get_hotel_info(user)
     print (request.method)
