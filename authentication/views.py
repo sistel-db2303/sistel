@@ -26,7 +26,10 @@ def login_user(request):
             response.set_cookie('email', user[0][0][0])
             response.set_cookie('role', 'hotel')
             return response
-
+        else:
+            context = {'login_error': 'Invalid login credentials'}
+            return render(request, 'login.html', context)
+        
 
     context = {}
     return render(request, 'login.html', context)
