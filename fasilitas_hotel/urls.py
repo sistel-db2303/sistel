@@ -1,10 +1,12 @@
 from django.urls import path
 from .views import *
 
-app_name = 'fasilitas_hotel'
+app_name = "fasilitas_hotel"
 
 urlpatterns = [
-    path('', show_fasilitas_hotel, name='show_fasilitas_hotel'),
-    path('add/', show_add_fasilitas_form, name = 'show_add_fasilitas_form'),
-    path('update/', show_update_fasilitas_form, name = 'show_update_fasilitas_form'),
+    path('', fasilitas_hotel, name='fasilitas_hotel'),
+    # path('show-fasilitas/', show_fasilitas, name = 'show_fasilitas'),
+    path('add-fasilitas/', add_fasilitas_hotel, name='add_fasilitas_hotel'), 
+    path('update-fasilitas/', update_fasilitas_hotel, name = 'update_fasilitas_hotel'),
+    path('delete-fasilitas/<str:nama_fasilitas>', delete_fasilitas_hotel, name = 'delete_fasilitas_hotel'),
 ]
