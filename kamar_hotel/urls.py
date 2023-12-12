@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import *
 
+app_name = 'kamar_hotel'
+
 urlpatterns = [
     path('', get_daftar_reservasi, name='get-daftar-reservasi'),
     path('update/<str:reservation_id>', update_reservasi, name='update-reservasi'),

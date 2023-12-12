@@ -39,7 +39,7 @@
     <h1>UPDATE STATUS RESERVASI</h1>
 
     <div class="dashboard-section">
-        <form action="{%url 'update-reservasi' reservation_id%}" method="post">
+        <form action="{%url 'kamar_hotel:update-reservasi' reservation_id%}" method="post">
             {%csrf_token%}
             <table>
                 <tr>
