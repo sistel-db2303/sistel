@@ -18,7 +18,7 @@ cur = conn.cursor()  # creating a cursor
 cur.execute(r"""
 
             set search_path to sistel;
-select * from complaints
+select * from sistel.user where email = 'ekonke1@altervista.org';
             
 """)
 
