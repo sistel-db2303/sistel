@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'authentication',
     'CRU_Kamar_Hotel',
     'registration',
+    'fasilitas_hotel',
+    'daftar_detail_hotel',
 
 ]
 

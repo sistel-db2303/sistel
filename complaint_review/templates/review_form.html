@@ -1,29 +1,44 @@
 {% extends 'base_customer.html' %}
 
 {% block content %}
-    
 
-    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
-        <div class = "review">
-            <h1>Review Form</h1>
-            <form method="POST" >  
-                {% csrf_token %}  
-                <table>
-                    <tr>
-                        <td><b>Email:</b></td>
-                        <td>{{email}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Nama:</b></td>
-                        <td>{{nama}}</td>
-                    </tr>
-                    {{ form.as_table }}  
-                    <tr>  
-                        <td></td>
-                        <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"/></td>  
-                    </tr>  
-                </table>  
-            </form>
+    <div class=" container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class = "review">
+                    <h1>Review Form</h1>
+
+                    <form method="POST">            
+                        {% csrf_token %}  
+
+                        <div class="mb-3">
+                            <label class="form-label">Email:</label>
+                            <input class="form-control" value="{{email}}" disabled readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nama:</label>
+                            <input class="form-control" value="{{fname}} {{lname}}" disabled readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="rating_field">Rating:</label>
+                            <input class="form-control" id="rating_field">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="review_field">Review:</label>
+                            <textarea class="form-control" id="review_field"></textarea>
+                        </div>
+                        
+                        <input class="btn btn-primary mb-3" type="submit" name="submit" value="Submit">
+                    </form>
+
+                    {{error_message}}
+
+                </div>
+            </div>
         </div>
     </div>
+
 {% endblock content %}

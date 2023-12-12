@@ -89,3 +89,7 @@ def submit_complaint(email_user, hotel_name, hotel_branch, complaint):
     
     conn.commit()
     print('Successfully inserted complaint')
+
+
+def submit_review(hotel_name, rating, review):
+    return -1

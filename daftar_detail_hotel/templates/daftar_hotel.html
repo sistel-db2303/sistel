@@ -1,0 +1,49 @@
+
+{% extends 'base_customer.html' %}
+
+{% block content %}
+
+    <div class=" container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-5">Reservasi Kamar Hotel</h2>
+
+                <form method="GET">
+                    {% csrf_token %} 
+
+                    <!-- <div class="mb-3">
+                        <label for="minPrice_field" class="form-label">Minimum Price:</label>
+                        <input class="form-control" id="minPrice_field">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="maxPrice_field" class="form-label">Maximum Price:</label>
+                        <input class="form-control" id="maxPrice_field">
+                    </div> -->
+
+                    <table>{{form.as_table}}</table>
+                    
+                    <input class="btn btn-primary mb-3" type="submit" name="submit" value="Submit">
+                </form>
+
+                <div>
+                    {% if hotel_list %}
+                        {% for row in hotel_list %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"> {{ row.0 }} </h5>
+                                    <p class="card-text"> Rating: {{ row.1 }} </p>
+                                    <a href="{% url 'daftar_detail_hotel:show_detail_hotel' row.0 %}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No hotel found.</p>
+                    {% endif %}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

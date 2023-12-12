@@ -28,4 +28,6 @@ urlpatterns = [
     path('CRU-Kamar-Hotel/', include('CRU_Kamar_Hotel.urls')),
     path('registration/', include('registration.urls')),
     path('', show_main, name='show_main'),
+    path('daftar_hotel/', include('daftar_detail_hotel.urls')),
+    path('fasilitas_hotel/', include('fasilitas_hotel.urls'))
 ]

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .forms import ComplaintForm, ReviewForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .queries import submit_complaint
+from .queries import submit_complaint,submit_review
 
 def show_complaint_form(request):
     try:
@@ -43,19 +43,40 @@ def show_complaint_form(request):
     return render(request, "complaint_form.html", context)
 
 
-def show_review_form(request):
+def show_review_form(request, hotel_name):
+    try:
+        email_user = request.COOKIES['email']
+        fname_user = request.COOKIES['fname']
+        lname_user = request.COOKIES['lname']
+    except:
+        return HttpResponseRedirect(reverse("authentication:login_user"))
     if request.method == "POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
             form = ReviewForm()
             form.save()
-            #return redirect(TODO: Insert User DashBoard Page here)
+
+            rating = form.cleaned_data['rating']
+            review = form.cleaned_data['review']
+            try:
+                submit_review(hotel_name, rating, review)
+            except:
+                context = {
+                    "email" : email_user,
+                    "fname" : fname_user,
+                    "lname" : lname_user,
+                    "form"  : form,
+                    "error_message" : '''Terjadi kesalahan. Pastikan rating diantara 1-5. :)'''
+                }
+                return render(request, "complaint_form.html", context)
+            return HttpResponseRedirect(reverse("r_dashboard:show_customer_dashboard"))
 
     else:
         form = ReviewForm()
     context = {
-        "email" : "contoh@email.com",
-        "nama" : "Contoh Nama",
+        "email" : email_user,
+        "fnama" : fname_user,
+        "lname" : lname_user,
         "form" : form,
     }
     return render(request, "review_form.html", context)

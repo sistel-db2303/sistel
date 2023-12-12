@@ -5,5 +5,7 @@ class ComplaintForm(forms.Form):
     cabang_hotel = forms.CharField(label = "Cabang Hotel")
     description = forms.CharField(widget=forms.Textarea,)
 
+
 class ReviewForm(forms.Form):
-    review = forms.CharField(widget=forms.Textarea)
+    rating = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'rating_field'}))
+    review = forms.CharField(widget=forms.Textarea(attrs={'id' : 'review_field'}))

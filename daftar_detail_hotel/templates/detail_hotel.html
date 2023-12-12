@@ -1,0 +1,65 @@
+{% extends 'base_customer.html' %}
+
+{% block content %}
+
+    <div class=" container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {% for row in hotel_detail%}
+                <h2 class="text-center mb-5">{{ row.0 }}</h2>
+                <table class="table mb-4">
+                    <tr>
+                        <th>Deskripsi</th>
+                        <td>{{ row.1 }}</td>
+                    </tr>
+                    <tr>
+                        <th>NIB</th>
+                        <td>{{ row.2 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rating</th>
+                        <td>{{ row.3 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Alamat</th>
+                        <td>{{ row.4 }}, {{ row.5 }}, {{ row.6 }}, {{ row.7 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Min Check-In</th>
+                        <td>{{ row.8 }}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Min Check-Out</th>
+                        <td>{{ row.9 }}</td>
+                    </tr>
+                </table>
+
+                <h3 class="mt-5">Kamar Tersedia</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nomor Kamar</th>
+                            <th>Harga per Malam</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-group-divider">
+                        {% for row in room_list %}
+                        <tr>
+                            <td>{{ row.0 }}</td>
+                            <td>{{ row.1 }}</td>
+                            <td><button type="button" class="btn btn-primary mb-3" onclick="bookReservasi()">Reservasi</button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <a href="{% url 'complaint_review:show_review' row.0 %}" class="btn btn-primary mb-3">Add Review</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
