@@ -15,27 +15,46 @@ print("Database connected successfully")
 cur = conn.cursor()  # creating a cursor
  
 # executing queries to create table
-cur.execute(r"""
+# cur.execute(rf"""
+                
+#         set search_path to sistel;
 
-            set search_path to sistel;
-select * from complaints
+#         select room.number,room.price,room.floor,string_agg(room_facilities.id,', ')
+#         from room,room_facilities   
+#         where room.number = room_facilities.rNum
+#         GROUP BY room.number,room.price,room.floor
+#                 """)
+
+cur.execute(rf"""
             
-""")
+    set search_path to sistel;
+            
+    create or replace function cek_user()
+    returns trigger as 
+    $$
+        declare
+            rev_status varchar(50);
+        begin
+            if (tg_op = 'INSERT') then
+                if (new.password ~* '[a-z]') is false or (new.password ~* '[0-9]') is false then
+                raise exception 'Password harus mengandung angka dan huruf';
+                end if;
+                return new;
+            end if;
+        end;
+    $$
+    Language plpgsql;
 
-data_kamar =  cur.fetchall()
-print(data_kamar)
+
+            
+                """)
+
+
+# data_kamar =  cur.fetchall()
+# print(data_kamar)
 
 # commit the changes
+# print(cur.fetchall())
 conn.commit()
 print("Task finished successfully")
 
-
-
-
-'''
-select status 
-from reservation_status, reservation_status_history, reservation, complaints
-where 
-    reservation.rID = reservation_status_history.rID
-    and reservation_status_history.rsID = reservation_status.id;
-    '''

@@ -21,9 +21,12 @@
               <input type="password" class="form-control" id="password" placeholder="Your password" name="password"/>
             </div>
             <input class="btn btn-primary" type="submit" name="submit" value="Login"/>  
+            {{login_error}}
           </form>
+          
         </div>
       </div>
+      <a class="btn btn-primary-link" href="{% url 'registration:register' %}">Create New User</a>
     </div>
   </body>
 </html>

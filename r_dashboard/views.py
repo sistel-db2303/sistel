@@ -22,7 +22,10 @@ from .queries import customer_dashboard_data, hotel_dashboard_data
 logged_in_user_email = 'ssupple5@about.com'
 
 def show_customer_dashboard(request):
-    user = request.COOKIES['email']
+    try:
+        user = request.COOKIES['email']
+    except:
+        return HttpResponseRedirect(reverse("authentication:login_user"))
     data = customer_dashboard_data(user)
     context =  {
         'fname': data[0][0],
@@ -36,7 +39,10 @@ def show_customer_dashboard(request):
     
 
 def show_hotel_dashboard(request):
-    user = request.COOKIES['email']
+    try:
+        user = request.COOKIES['email']
+    except:
+        return HttpResponseRedirect(reverse("authentication:login_user"))
     data = hotel_dashboard_data(user)
     context = {
         'fname':data[0][0][0],

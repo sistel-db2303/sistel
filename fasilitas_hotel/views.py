@@ -58,12 +58,12 @@ def delete_fasilitas_hotel(request, nama_fasilitas):
     return redirect('fasilitas_hotel:fasilitas_hotel')
 
 
-def show_fasilitas(request):
-    email = request.COOKIES.get('email')
-    hotel = get_hotel_by_email(email)
-    facilities = get_fasilitas(hotel.get('hotel_name'), hotel.get('hotel_branch'))
-    context = {
-        'facilities': facilities
-    }
+# def show_fasilitas(request):
+#     email = request.COOKIES.get('email')
+#     hotel = get_hotel_by_email(email)
+#     facilities = get_fasilitas(hotel.get('hotel_name'), hotel.get('hotel_branch'))
+#     context = {
+#         'facilities': facilities
+#     }
     
-    return HttpResponse(context)
+#     return HttpResponse(context)

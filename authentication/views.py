@@ -8,24 +8,40 @@ def login_user(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = login(email, password)
+            
         if len(user[0]) == 0:
-            raise Exception("SALAH LOGIN")
-        
+            context = {'login_error': 'Invalid login credentials'}
+            return render(request, 'login.html', context)
+
+
         if len(user[1]) != 0:
-            print("masuk sini")
             response = HttpResponseRedirect(reverse("r_dashboard:show_customer_dashboard"))
             response.set_cookie('email', user[0][0][0])
+            response.set_cookie('role', 'customer')
+            response.set_cookie('fname', user[0][0][2])
+            response.set_cookie('lname', user[0][0][3])
             return response
         elif len(user[2]) != 0:
             response = HttpResponseRedirect(reverse("r_dashboard:show_hotel_dashboard"))
             response.set_cookie('email', user[0][0][0])
+            response.set_cookie('role', 'hotel')
             return response
 
 
     context = {}
     return render(request, 'login.html', context)
 
+
+def logout_user(request):
+    response = HttpResponseRedirect(reverse('authentication:login_user'))
+    response.delete_cookie('email')
+    response.delete_cookie('role')
+    response.delete_cookie('fname')
+    response.delete_cookie('lname')
+    return response
+
 def register_user(request):
+    #TODO: BUAT FUNGSI REGISTER
     return
 
 

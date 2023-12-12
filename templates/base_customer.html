@@ -22,19 +22,19 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="/dashboard/customer/">Dashboard Pengguna</a>
+                <a class="nav-link" href="{% url 'r_dashboard:show_customer_dashboard' %}">Dashboard Pengguna</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#reservasi">Reservasi Pengguna</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pemesanan">Pemesanan Kamar</a>
+                <a class="nav-link" href="{%url 'kamar_hotel:get-daftar-reservasi'%}">Pemesanan Kamar</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/feedback/complaint/">Komplain</a>
+                <a class="nav-link" href="{% url 'complaint_review:show_complaint' %}">Komplain</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#logout">Logout</a>
+                <a class="nav-link" href="{% url 'authentication:logout_user' %}">Logout</a>
               </li>
               
             </ul>
