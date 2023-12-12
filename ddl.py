@@ -15,12 +15,35 @@ print("Database connected successfully")
 cur = conn.cursor()  # creating a cursor
  
 # executing queries to create table
-cur.execute(r"""
+# cur.execute(rf"""
+                
+#         set search_path to sistel;
+
+#         select room.number,room.price,room.floor,string_agg(room_facilities.id,', ')
+#         from room,room_facilities   
+#         where room.number = room_facilities.rNum
+#         GROUP BY room.number,room.price,room.floor
+#                 """)
+
+cur.execute(rf"""
+            
+        set search_path to sistel;
+        
+        
+        DROP TRIGGER IF EXISTS check_positive_values ON ROOM;
+
 
             set search_path to sistel;
 select * from sistel.user where email = 'ekonke1@altervista.org';
+
             
-""")
+                """)
+
+# cur.execute(rf"""
+#                 set search_path to sistel;
+#                 select * from room;
+
+#             """)
 
 data_kamar =  cur.fetchall()
 print(data_kamar)
