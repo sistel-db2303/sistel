@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base_customer.html' %}
+
+{% block meta %}
     <title>UPDATE STATUS RESERVASI</title>
     <style>
         body {
@@ -36,8 +34,9 @@
             background-color: #f2f2f2;
         }
     </style>
-</head>
-<body>
+{% endblock meta %}
+{% block content %}
+
     <h1>RESERVASI SHUTTLE</h1>
 
     <div class="dashboard-section">
@@ -46,14 +45,14 @@
             <table>
                 <tr>
                     <th>ID Reservasi</th>
-                    <td><input type="text" name="id" value="{{id}}" readonly></td>
+                    <td><input type="text" name="id" value="{{reservation_id}}" readonly></td>
                 </tr>
                 <tr>
                     <th>Kendaraan</th>
                     <td><select name="shuttle_service">
-                        {%for driver_name, vehicle_name, vehicle_type, phonenum, platnum in daftar_kendaraan%}
-                            <option value="({{phonenum}}, {{platnum}})">
-                            {{driver_name}}, {{vehicle_brand}}, {{vehicle_type}}, {{platnum}}
+                        {%for driver_name, vehicle_name, vehicle_type, phonenum, platnum in daftar_shuttle_service%}
+                            <option value="('{{platnum}}', '{{phonenum}}')">
+                            {{driver_name}}, {{vehicle_name}}, {{vehicle_type}}, {{platnum}}
                             </option>
                         {%endfor%}
                         </select></td>
@@ -63,7 +62,4 @@
         </form>
         
     </div>
-
-    
-</body>
-</html>
+{% endblock content %}

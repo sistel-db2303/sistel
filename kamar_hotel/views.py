@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 import psycopg2
 from datetime import datetime, timedelta, timezone
+from django.contrib import messages
  
 DB_NAME = 'railway'
 DB_USER = 'postgres'
@@ -75,16 +76,21 @@ def update_reservasi(request, reservation_id):
         return redirect('get-daftar-reservasi')
     
     if request.method == "POST":
-        status_id = request.POST.get("status")
-        cur.execute(f"""
-        set search_path to sistel;
-        update reservation_status_history
-        set rsid = '{status_id}'
-        where rid = '{reservation_id}';
-        """)
-        conn.commit()
+        try:
 
-        return redirect('get-detail-reservasi', reservation_id = reservation_id)
+            status_id = request.POST.get("status")
+            cur.execute(f"""
+            set search_path to sistel;
+            update reservation_status_history
+            set rsid = '{status_id}', datetime='{datetime.now(timezone(timedelta(hours=7)))}'
+            where rid = '{reservation_id}';
+            """)
+            conn.commit()
+        except Exception as e:
+            messages.error(request,str(e))
+        finally:
+            return redirect('get-detail-reservasi', reservation_id = reservation_id)
+        
 
     cur.execute(f"""
     
@@ -146,7 +152,7 @@ def get_detail_reservasi(request, reservation_id):
     ;
     """)
 
-    data_shuttle = cur.fetchall()
+    data_shuttle = cur.fetchone()
     print(data_shuttle)
     print(reservation_id)
 
@@ -179,19 +185,26 @@ def reservasi_shuttle(request, reservation_id):
     email = request.COOKIES.get('email')
     role = request.COOKIES.get('role')
 
-    if role != 'customer':
-        return redirect('get-daftar-reservasi')
+    # if role != 'customer':
+    #     return redirect('get-daftar-reservasi')
     
     if request.method == "POST":
-        key = request.POST.get("shuttle_service")
-        cur.execute(f"""
-        set search_path to sistel
-        insert into reservation_shuttleservice
-        values ({reservation_id}, {key[0]}, {key[1]}, {datetime.now(timezone(timedelta(hours=7)))}, true);
-        """)
-        conn.commit()
+        try :
 
-        return redirect('get-detail-reservasi', reservation_id = reservation_id)
+            key = eval(request.POST.get("shuttle_service"))
+            print(key)
+            cur.execute(f"""
+            set search_path to sistel;
+            insert into reservation_shuttleservice
+            values ('{reservation_id}', '{key[0]}', '{key[1]}', '{datetime.now(timezone(timedelta(hours=7)))}', true);
+            """)
+            conn.commit()
+
+        except Exception as e:
+            messages.error(request, str(e))
+        finally:
+            return redirect('get-detail-reservasi', reservation_id = reservation_id)
+            
 
     cur.execute(f"""
 

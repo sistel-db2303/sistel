@@ -17,25 +17,40 @@ cur = conn.cursor()  # creating a cursor
 # executing queries to create table
 cur.execute(r"""
 
-            set search_path to sistel;
-select * from complaints
+set search_path to sistel;
+
+CREATE OR REPLACE FUNCTION CekStatusAktif ()
+returns trigger as $$
+DECLARE status_reservasi VARCHAR(20);
+BEGIN
+
+
+    -- Mendapatkan status reservasi kamar
+    SELECT status INTO status_reservasi
+    FROM reservation_status_history JOIN reservation_status ON rsid=id
+    WHERE rid=new.rsv_id;
+
+    -- Memeriksa apakah reservasi kamar aktif
+    IF status_reservasi = 'aktif' THEN
+        -- Insert ke dalam tabel ReservasiPenjemputan
+	return new;
+    ELSE
+        RAISE EXCEPTION 'Status Reservasi Tidak Aktif';
+    END IF;
+END;
+$$ language plpgsql;
+
+
+
+
+
+
             
 """)
 
-data_kamar =  cur.fetchall()
-print(data_kamar)
 
 # commit the changes
+# print(cur.fetchall())
 conn.commit()
 print("Task finished successfully")
 
-
-
-
-'''
-select status 
-from reservation_status, reservation_status_history, reservation, complaints
-where 
-    reservation.rID = reservation_status_history.rID
-    and reservation_status_history.rsID = reservation_status.id;
-    '''

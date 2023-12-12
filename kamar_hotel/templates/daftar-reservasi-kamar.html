@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base_customer.html' %}
+
+{% block meta %}
     <title>DAFTAR RESERVASI</title>
     <style>
         body {
@@ -36,8 +34,10 @@
             background-color: #f2f2f2;
         }
     </style>
-</head>
-<body>
+{% endblock meta %}
+{% block content %}
+
+
     <h1>DAFTAR RESERVASI KAMAR</h1>
 
     <div class="dashboard-section">
@@ -68,5 +68,4 @@
     </div>
 
     
-</body>
-</html>
+{% endblock content %}
