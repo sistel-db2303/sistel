@@ -13,19 +13,78 @@ def initalize_connection():
                         host=DB_HOST,
                         port=DB_PORT)
 
-def submit_fasilitas (hotel_name, hotel_branch, facility_name):
+
+def submit_fasilitas(nama_hotel, hotel_branch, nama_fasilitas):
     conn = initalize_connection()
-    cur = conn.cursor()
-
+    curr = conn.cursor()
     
+    SET_SEARCH_PATH = f"SET SEARCH_PATH TO SISTEL; "
+    insert_query = f"INSERT INTO HOTEL_FACILITIES VALUES(\'{nama_hotel}\', \'{hotel_branch}\', \'{nama_fasilitas}\');"
+    query = SET_SEARCH_PATH + insert_query
+    curr.execute(query)
+    conn.commit()
     
-    cur.execute(rf"""
+
+def get_fasilitas(nama_hotel, hotel_branch):
+    conn = initalize_connection()
+    curr = conn.cursor()
     
-    set search_path to sistel;
-                
-    insert into hotel_facilities values
-                ('CC{facility_count+1}')
-                """)
+    SET_SEARCH_PATH = f"SET SEARCH_PATH TO SISTEL; "
+    fetch_query = f"SELECT * FROM HOTEL_FACILITIES AS HF WHERE HF.hotel_name=\'{nama_hotel}\' AND HF.hotel_branch=\'{hotel_branch}\';"
+    query = SET_SEARCH_PATH + fetch_query
+
+    curr.execute(query)
+    data = curr.fetchall() #ngambil data
+    conn.commit()
+    
+    res = []
+    for row in data:
+        res.append({
+            'hotel_name': row[0],
+            'hotel_branch': row[1],
+            'facility': row[2]
+        })
+    return res
 
 
+def get_hotel_by_email(email):
+    conn = initalize_connection()
+    curr = conn.cursor()
+    
+    SET_SEARCH_PATH = f"SET SEARCH_PATH TO SISTEL; "
+    fetch_query = f""" SELECT * FROM HOTEL WHERE email = '{email}' """
+    query = SET_SEARCH_PATH + fetch_query
 
+    curr.execute(query)
+    data = curr.fetchall()
+    data = data[0]
+    conn.commit()
+
+    res = {
+        'email': data[0],
+        'hotel_name': data[1],
+        'hotel_branch': data[2],
+    }
+    return res
+
+
+def delete_fasilitas(nama_hotel, hotel_branch, nama_fasilitas):
+    conn = initalize_connection()
+    curr = conn.cursor()
+
+    SET_SEARCH_PATH = f"SET SEARCH_PATH TO SISTEL; "
+    delete_query = f"DELETE FROM HOTEL_FACILITIES WHERE hotel_name='{nama_hotel}' AND hotel_branch='{hotel_branch}' AND facility_name='{nama_fasilitas}';"
+    query = SET_SEARCH_PATH + delete_query
+    curr.execute(query)
+    conn.commit()
+
+
+def update_fasilitas(nama_hotel, hotel_branch, old_nama_fasilitas, new_nama_fasilitas):
+    conn = initalize_connection()
+    curr = conn.cursor()
+
+    SET_SEARCH_PATH = f"SET SEARCH_PATH TO SISTEL; "
+    update_query = f"UPDATE HOTEL_FACILITIES SET facility_name='{new_nama_fasilitas}' WHERE hotel_name='{nama_hotel}' AND hotel_branch='{hotel_branch}' AND facility_name='{old_nama_fasilitas}';"
+    query = SET_SEARCH_PATH + update_query
+    curr.execute(query)
+    conn.commit()
