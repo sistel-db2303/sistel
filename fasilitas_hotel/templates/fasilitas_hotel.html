@@ -1,0 +1,81 @@
+{% extends 'base_hotel.html' %}
+
+{% block meta %}
+
+{% endblock meta %}
+{% block content %}
+
+<body>
+    <div class=" container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-5">Fasilitas Hotel</h2>
+
+                <div class="facility-section">
+                    <a href="{% url 'fasilitas_hotel:add_fasilitas_hotel' %}">
+                        <button type="button" class="btn btn-primary" onclick="addFacility()">Tambah Fasilitas</button>
+                    </a>
+
+                    <br><br>
+
+                    <table class="table table-hover table-strpied-columns" id="facilityTable">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Nama Fasilitas</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% if facilities|length > 0 %}
+                                {% for facility in facilities %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ facility.facility }}</td>
+                                    <td class="d-flex gap-1">
+                                        <form action="{% url 'fasilitas_hotel:update_fasilitas_hotel' %}" method="get">
+                                            <input type="hidden" name="fasilitas" value="{{ facility.facility }}">
+                                            <button type="submit" class="btn btn-primary mb-3">Update</button>
+                                        </form>
+                                        <a href="{% url 'fasilitas_hotel:delete_fasilitas_hotel' facility.facility %}">
+                                            <button type="button" class="btn btn-danger mb-3">Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        Belum ada fasilitas.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addFacility() {
+            //TODO: func here
+            return -1;
+        }
+
+        function updateFacility() {
+            //TODO: func here
+            return -1;
+        }
+
+        function deleteFacility() {
+            //TODO: func here
+            return -1;
+        }
+    </script>
+
+</body>
+</html>
+
+{% endblock content %}
