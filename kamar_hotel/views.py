@@ -73,7 +73,7 @@ def update_reservasi(request, reservation_id):
     role = request.COOKIES.get('role')
 
     if role != 'hotel':
-        return redirect('get-daftar-reservasi')
+        return redirect('kamar_hotel:get-daftar-reservasi')
     
     if request.method == "POST":
         try:
@@ -89,7 +89,7 @@ def update_reservasi(request, reservation_id):
         except Exception as e:
             messages.error(request,str(e))
         finally:
-            return redirect('get-detail-reservasi', reservation_id = reservation_id)
+            return redirect('kamar_hotel:get-detail-reservasi', reservation_id = reservation_id)
         
 
     cur.execute(f"""
@@ -203,7 +203,7 @@ def reservasi_shuttle(request, reservation_id):
         except Exception as e:
             messages.error(request, str(e))
         finally:
-            return redirect('get-detail-reservasi', reservation_id = reservation_id)
+            return redirect('kamar_hotel:get-detail-reservasi', reservation_id = reservation_id)
             
 
     cur.execute(f"""
