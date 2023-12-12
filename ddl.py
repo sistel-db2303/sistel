@@ -26,11 +26,20 @@ cur = conn.cursor()  # creating a cursor
 #                 """)
 
 cur.execute(rf"""
+            
         set search_path to sistel;
-                
-        select * from hotel
         
+        
+        DROP TRIGGER IF EXISTS check_positive_values ON ROOM;
+
+            
                 """)
+
+# cur.execute(rf"""
+#                 set search_path to sistel;
+#                 select * from room;
+
+#             """)
 
 data_kamar =  cur.fetchall()
 print(data_kamar)

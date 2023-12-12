@@ -23,7 +23,7 @@ def add_room(number,price,floor,hotel_name,hotel_branch):
         set search_path to sistel;
                 
         insert into room values
-                ('{number}','{price}', '{floor}', '{hotel_name}','{hotel_branch}');
+                ('{hotel_name}','{hotel_branch}','{number}','{price}', '{floor}');
                 """
                 )
     
@@ -31,17 +31,18 @@ def add_room(number,price,floor,hotel_name,hotel_branch):
     print('Successfully inserted room')
     
 
-def show_room():
+def show_room(hotel_name,hotel_branch):
     conn = initalize_connection()
-    cur = conn.cursor()
+    cur = conn.cursor() 
 
     cur.execute(rf"""
                 
         set search_path to sistel;
 
         select room.hotel_name,room.hotel_branch,room.number,room.price,room.floor,string_agg(room_facilities.id,', ')
-        from room,room_facilities   
-        where room.number = room_facilities.rNum
+        from room 
+        LEFT JOIN room_facilities ON room.number = room_facilities.rNum
+        where room.hotel_name = '{hotel_name}' AND room.hotel_branch = '{hotel_branch}'
         GROUP BY room.hotel_name,room.hotel_branch,room.number,room.price,room.floor
                 """)
     

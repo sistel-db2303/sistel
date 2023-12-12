@@ -28,13 +28,22 @@ def tambah_kamar(request):
         # Redirect atau render halaman setelah berhasil menambah kamar
         # TODO : CARI GANTI NAMA_HOTEL DAN CABANG_HOTEL
 
-    return render(request, 'formTambahKamar.html')
+    return HttpResponseRedirect(reverse("CRU_Kamar_Hotel:show_daftarKamar"))
 
 
 # View for the "Kamar Hotel" page
 def daftar_kamar(request):
     # Panggil fungsi untuk menampilkan daftar kamar
-    daftar_kamar = show_room()  # Fungsi `show_room()` dari queries.py
+    user = ''
+    try:
+            user = request.COOKIES['email']
+            print('user : ',user)
+    except:
+            return HttpResponseRedirect(reverse("authentication:login_user"))
+    
+    hotel_name,hotel_branch = get_hotel_info(user)
+
+    daftar_kamar = show_room(hotel_name,hotel_branch)  # Fungsi `show_room()` dari queries.py
     daftar_kamar_dict = []
     for row in daftar_kamar:
         kamar = {
