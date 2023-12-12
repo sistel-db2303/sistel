@@ -15,39 +15,38 @@ print("Database connected successfully")
 cur = conn.cursor()  # creating a cursor
  
 # executing queries to create table
-cur.execute(r"""
+# cur.execute(rf"""
+                
+#         set search_path to sistel;
 
-set search_path to sistel;
+#         select room.number,room.price,room.floor,string_agg(room_facilities.id,', ')
+#         from room,room_facilities   
+#         where room.number = room_facilities.rNum
+#         GROUP BY room.number,room.price,room.floor
+#                 """)
 
-CREATE OR REPLACE FUNCTION CekStatusAktif ()
-returns trigger as $$
-DECLARE status_reservasi VARCHAR(20);
-BEGIN
-
-
-    -- Mendapatkan status reservasi kamar
-    SELECT status INTO status_reservasi
-    FROM reservation_status_history JOIN reservation_status ON rsid=id
-    WHERE rid=new.rsv_id;
-
-    -- Memeriksa apakah reservasi kamar aktif
-    IF status_reservasi = 'aktif' THEN
-        -- Insert ke dalam tabel ReservasiPenjemputan
-	return new;
-    ELSE
-        RAISE EXCEPTION 'Status Reservasi Tidak Aktif';
-    END IF;
-END;
-$$ language plpgsql;
+cur.execute(rf"""
+            
+        set search_path to sistel;
+        
+        
+        DROP TRIGGER IF EXISTS check_positive_values ON ROOM;
 
 
-
-
-
+            set search_path to sistel;
+select * from sistel.user where email = 'ekonke1@altervista.org';
 
             
-""")
+                """)
 
+# cur.execute(rf"""
+#                 set search_path to sistel;
+#                 select * from room;
+
+#             """)
+
+data_kamar =  cur.fetchall()
+print(data_kamar)
 
 # commit the changes
 # print(cur.fetchall())
