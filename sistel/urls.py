@@ -26,5 +26,6 @@ urlpatterns = [
     path('dashboard/', include('r_dashboard.urls')),
     path('auth/', include('authentication.urls')),
     path('CRU-Kamar-Hotel/', include('CRU_Kamar_Hotel.urls')),
+    path('registration/', include('registration.urls')),
     path('', show_main, name='show_main'),
 ]
