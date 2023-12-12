@@ -49,16 +49,7 @@ data_kamar =  cur.fetchall()
 print(data_kamar)
 
 # commit the changes
+# print(cur.fetchall())
 conn.commit()
 print("Task finished successfully")
 
-
-
-
-'''
-select status 
-from reservation_status, reservation_status_history, reservation, complaints
-where 
-    reservation.rID = reservation_status_history.rID
-    and reservation_status_history.rsID = reservation_status.id;
-    '''

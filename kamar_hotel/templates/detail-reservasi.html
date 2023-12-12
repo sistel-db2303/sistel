@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base_customer.html' %}
+
+{% block meta %}
     <title>DETAIL RESERVASI</title>
     <style>
         body {
@@ -36,8 +34,8 @@
             background-color: #f2f2f2;
         }
     </style>
-</head>
-<body>
+{% endblock meta %}
+{% block content %}
     <h1>DETAIL RESERVASI</h1>
 
     <div class="dashboard-section">
@@ -45,27 +43,27 @@
         <table>
             <tr>
                 <th>ID Reservasi</th>
-                <td>RSVP-01</td>
+                <td>{{id}}</td>
             </tr>
             <tr>
                 <th>Nomor Kamar</th>
-                <td>Kamar 101</td>
+                <td>{{nomor}}</td>
             </tr>
             <tr>
                 <th>Nama Hotel</th> 
-                <td>Hotel Beau</td>           
+                <td>{{nama_hotel}}</td>           
             </tr>    
             <tr>
                 <th>Cabang Hotel</th>
-                <td>Semarang</td>
+                <td>{{cabang_hotel}}</td>
             </tr> 
             <tr>
                 <th>Tanggal</th>
-                <td>23-11-2023</td>
+                <td>{{tanggal|date:"d-m-Y"}}</td>
             </tr>  
             <tr>
                 <th>Status</th>
-                <td>Menunggu Pembayaran</td>
+                <td>{{status}}</td>
             </tr>       
         </table>       
     </div>
@@ -73,19 +71,48 @@
     <div class="dashboard-section">
         <h2>SHUTTLE</h2>
         <table>
+            {%if not nomor_kendaraan%}
             <tr>
                 <td>Tidak ada reservasi untuk shuttle pada reservasi ini.</td>
             </tr>
             <tr>
                 <td><button type="button">
-                Reservasi Shuttle
+                <a href="{% url 'reservasi-shuttle' id %}">Reservasi Shuttle</a>
                 </button></td>
-            </tr>     
+            </tr>  
+            {%else%}
+            <tr>
+                <th>ID Reservasi:</th>
+                <td>{{id}}</td>
+            </tr>
+            <tr>
+                <th>Nomor Kendaraan:</th>
+                <td>{{nomor_kendaraan}}</td>
+            </tr>
+            <tr>
+                <th>Nomor HP Driver:</th>
+                <td>{{nomor_driver}}</td>
+            </tr>
+            <tr>
+                <th>Tanggal:</th>
+                <td>{{tanggal_shuttle|date:"d-m-Y"}}</td>
+            </tr>
+            {%endif%}   
         </table>       
     </div>
 
-    <button type="button"> Back </button>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message|truncatewords:4 }}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <button type="button"> 
+        <a href="{%url 'get-daftar-reservasi'%}">Back</a>
+    </button>
 
     
-</body>
-</html>
+{% endblock content %}
