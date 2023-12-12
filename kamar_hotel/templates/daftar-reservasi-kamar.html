@@ -57,9 +57,9 @@
                 <td>{{status}}</td>
                 <td>
                     {%if is_hotel%}
-                    <button type="button"><a href="{% url 'update-reservasi' id%}">Update Reservasi</a></button>
+                    <button type="button"><a href="{% url 'kamar_hotel:update-reservasi' id%}">Update Reservasi</a></button>
                     {%endif%}
-                    <button type="button"><a href="{% url 'get-detail-reservasi' id %}">Get Detail</a></button>
+                    <button type="button"><a href="{% url 'kamar_hotel:get-detail-reservasi' id %}">Get Detail</a></button>
                 </td>
             </tr>
             {%endfor%}
